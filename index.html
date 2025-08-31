@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HP • Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f19;           /* deep luxe */
+      --panel:#0f1525cc;      /* glass panel */
+      --text:#e8ecf3;         /* premium off-white */
+      --muted:#9aa3b2;
+      --brand-1:#5f76ff;      /* sapphire */
+      --brand-2:#9b5fff;      /* amethyst */
+      --brand-3:#00e7d2;      /* teal accent */
+      --card:#0f1423;
+      --stroke:#1c2440;
+      --radius:22px;
+      --shadow-xl: 0 30px 80px rgba(0,0,0,.45), 0 10px 30px rgba(0,0,0,.35);
+      --shadow-md: 0 10px 30px rgba(0,0,0,.35);
+      --glass: backdrop-filter: blur(14px) saturate(140%);
+      --persp: 900px; /* perspective depth */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--text); background: radial-gradient(1200px 600px at 80% -10%, #2b2f55 0%, transparent 60%),
+                 radial-gradient(900px 600px at -10% 110%, #1b2441 0%, transparent 60%),
+                 linear-gradient(120deg, #0b0f19 0%, #0b0f19 40%, #0a0e18 100%);
+      font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      letter-spacing:.01em;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:0 24px}
+    /* Premium gradient ring */
+    .ring{
+      position:fixed; inset:-40vh -40vw auto auto; width:80vmax; height:80vmax; pointer-events:none; z-index:-1;
+      background: conic-gradient(from 210deg, transparent 0 35%, rgba(95,118,255,.25) 40%, rgba(155,95,255,.25) 60%, rgba(0,231,210,.25) 70%, transparent 85% 100%);
+      filter: blur(40px) saturate(180%);
+      mix-blend-mode: screen;
+      transform: translateZ(0);
+      animation: ringSpin 40s linear infinite;
+    }
+    @keyframes ringSpin{to{transform: rotate(360deg)}}
+
+    /* Nav */
+    nav{
+      position:sticky; top:0; z-index:100; backdrop-filter: blur(14px) saturate(140%);
+      background: linear-gradient(180deg, rgba(16,20,35,0.8), rgba(16,20,35,0.25));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+    .logo{
+      display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.02em
+    }
+    .logo-badge{
+      width:34px;height:34px;border-radius:12px;
+      background: radial-gradient(circle at 30% 30%, #7ea2ff, #5f76ff 40%, #9b5fff 60%, #00e7d2);
+      box-shadow: inset 0 0 18px rgba(255,255,255,.25), 0 10px 30px rgba(0,0,0,.35);
+      transform: translateZ(0);
+    }
+    .nav-links{display:flex;gap:22px}
+    .nav-links a{padding:10px 14px;border-radius:12px;color:var(--muted)}
+    .nav-links a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:14px;font-weight:600;
+      border:1px solid rgba(255,255,255,.08); background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      box-shadow: var(--shadow-md);
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(95,118,255,.22), rgba(155,95,255,.22));
+      border:1px solid rgba(143, 124, 255, .35);
+    }
+
+    /* Hero */
+    .hero{position:relative;}
+    .hero .inner{display:grid;grid-template-columns: 1.2fr .8fr; gap:40px; align-items:center; padding:84px 0 64px}
+    .headline{
+      font-size: clamp(42px, 7vw, 84px); line-height:1.02; font-weight:900; letter-spacing:-.02em; position:relative;
+      perspective: var(--persp);
+    }
+    .headline span.layer{display:block; transform-style:preserve-3d;}
+    .headline .front{ transform: translateZ(30px); text-shadow: 0 10px 30px rgba(0,0,0,.35)}
+    .headline .back{ position:absolute; inset:0; color:transparent; -webkit-text-stroke: 14px rgba(95,118,255,.18); transform: translateZ(-60px) scale(1.04) rotateX(6deg); filter: blur(2px)}
+    .kicker{color:var(--muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+    .sub{color:#c9d2e0; font-size: clamp(16px, 2.2vw, 20px); line-height:1.65; margin:18px 0 26px}
+
+    /* 3D showcase card */
+    .stage{ perspective: var(--persp);}
+    .card3d{ position:relative; border-radius: var(--radius); padding:24px; height: 380px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow: var(--shadow-xl);
+      transform-style:preserve-3d; transform: rotateX(0deg) rotateY(0deg) translateZ(0);
+      transition: transform .2s ease-out;
+      overflow:hidden;
+    }
+    .card3d .float{ position:absolute; inset:auto; width:180px; height:180px; border-radius:40px;
+      background: radial-gradient(circle at 30% 30%, rgba(126,162,255,.85), rgba(95,118,255,.8) 40%, rgba(155,95,255,.8) 60%, rgba(0,231,210,.9));
+      filter: blur(0.5px) saturate(180%);
+      box-shadow: 0 30px 80px rgba(0,0,0,.4);
+      transform: translateZ(70px) rotateX(-12deg) rotateY(12deg);
+      animation: float 8s ease-in-out infinite;
+    }
+    .float.one{ top:24px; right:-30px }
+    .float.two{ bottom:-40px; left:-20px; width:220px; height:220px; animation-delay:-2.2s }
+    @keyframes float{ 0%,100%{ transform: translateZ(70px) translateY(-10px) } 50%{ transform: translateZ(70px) translateY(10px) }}
+    .card3d h3{font-size:22px;margin:0 0 10px}
+    .card3d p{color:var(--muted)}
+
+    /* Sections */
+    section{padding:88px 0; position:relative}
+    .section-title{font-size:34px; margin:0 0 18px; letter-spacing:-.01em}
+    .section-sub{color:var(--muted); margin-bottom:28px}
+
+    /* Grid */
+    .grid{display:grid; gap:22px}
+    .grid.cols-3{grid-template-columns: repeat(3, 1fr)}
+    .grid.cols-2{grid-template-columns: repeat(2, 1fr)}
+    @media (max-width: 960px){
+      .hero .inner{grid-template-columns:1fr; padding-top:48px}
+      .grid.cols-3{grid-template-columns:1fr}
+      .grid.cols-2{grid-template-columns:1fr}
+    }
+
+    /* Project cards */
+    .proj{
+      position:relative; border-radius:20px; overflow:hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow: var(--shadow-md);
+      transform-style:preserve-3d; perspective: var(--persp);
+    }
+    .proj .thumb{height:220px; background: linear-gradient(135deg, #1f2747, #1a223f); position:relative}
+    .proj .thumb::after{content:""; position:absolute; inset:0; background: radial-gradient(800px 200px at 80% 10%, rgba(95,118,255,.35), transparent 60%)}
+    .proj .meta{padding:18px}
+    .tag{display:inline-block; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#bcd; background:rgba(95,118,255,.16); border:1px solid rgba(95,118,255,.35); padding:6px 10px; border-radius:999px}
+
+    /* Skill chips */
+    .chips{display:flex; flex-wrap:wrap; gap:10px}
+    .chip{padding:10px 12px; border-radius:999px; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.1); color:#cfd6e6; font-weight:600}
+
+    /* Timeline */
+    .timeline{position:relative;}
+    .timeline::before{content:""; position:absolute; left:18px; top:0; bottom:0; width:2px; background:linear-gradient(180deg, rgba(95,118,255,.6), rgba(155,95,255,.4))}
+    .item{display:grid; grid-template-columns:40px 1fr; gap:16px; padding:18px 0}
+    .dot{width:14px;height:14px;border-radius:50%; background:linear-gradient(135deg, #9b5fff, #5f76ff); box-shadow:0 0 0 6px rgba(155,95,255,.15)}
+    .card{border:1px solid rgba(255,255,255,.08); background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border-radius:16px; padding:14px}
+
+    /* Contact */
+    form{display:grid; gap:12px}
+    input, textarea{width:100%; padding:14px 16px; border-radius:14px; border:1px solid rgba(255,255,255,.1); background:#0f1522; color:var(--text); outline:none}
+    input:focus, textarea:focus{border-color: rgba(95,118,255,.6); box-shadow: 0 0 0 4px rgba(95,118,255,.1)}
+
+    /* Hover 3D tilt utility */
+    .tilt{transform-style:preserve-3d; will-change: transform;}
+    .tilt .pop{ transform: translateZ(30px) }
+
+    /* Footer */
+    footer{padding:30px 0; color:var(--muted); border-top:1px solid rgba(255,255,255,.06); background:linear-gradient(180deg, rgba(19,24,42,.7), rgba(19,24,42,.3))}
+
+    /* Scrollbar for a premium touch */
+    ::-webkit-scrollbar{width:12px;height:12px}
+    ::-webkit-scrollbar-thumb{background:linear-gradient(180deg, #2b335a, #1d2444); border-radius:999px; border:3px solid #0b0f19}
+  </style>
+</head>
+<body>
+  <div class="ring"></div>
+  <nav>
+    <div class="container nav-inner">
+      <div class="logo"><div class="logo-badge"></div> <span>HP • Portfolio</span></div>
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact" class="btn">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container inner">
+      <div>
+        <div class="kicker">Designer • Developer • AI tinkerer</div>
+        <h1 class="headline">
+          <span class="layer back">Hari's Portfolio</span>
+          <span class="layer front">Hari's Portfolio</span>
+        </h1>
+        <p class="sub">I craft clean, performant web experiences with a focus on delightful motion and accessible design. Check out my selected projects and let’s build something memorable.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap">
+          <a href="#work" class="btn primary">View Projects</a>
+          <a href="#contact" class="btn">Hire Me</a>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="card3d tilt" data-tilt>
+          <div class="float one"></div>
+          <div class="float two"></div>
+          <h3 class="pop">Signature Focus</h3>
+          <p>Front‑end engineering, UI animations, and full‑stack prototypes with modern tooling. I obsess over the tiny details that make interfaces feel premium.</p>
+          <div style="position:absolute; right:14px; bottom:14px" class="chips">
+            <span class="chip pop">React</span>
+            <span class="chip pop">TypeScript</span>
+            <span class="chip pop">Tailwind</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="work">
+    <div class="container">
+      <h2 class="section-title">Selected Work</h2>
+      <p class="section-sub">A few highlights. Hover to feel the depth.</p>
+      <div class="grid cols-3">
+        <article class="proj tilt" data-tilt>
+          <div class="thumb"></div>
+          <div class="meta">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+              <h3 style="margin:0">Smart Campus App</h3>
+              <span class="tag">Mobile • UI</span>
+            </div>
+            <p style="color:var(--muted)">End‑to‑end student hub with real‑time events, fees, and role‑based access. Built with Flutter + Firebase.</p>
+          </div>
+        </article>
+        <article class="proj tilt" data-tilt>
+          <div class="thumb"></div>
+          <div class="meta">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+              <h3 style="margin:0">AI Study Buddy</h3>
+              <span class="tag">Web • AI</span>
+            </div>
+            <p style="color:var(--muted)">Generative AI assistant for notes, quizzes, and study plans with multilingual support.</p>
+          </div>
+        </article>
+        <article class="proj tilt" data-tilt>
+          <div class="thumb"></div>
+          <div class="meta">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+              <h3 style="margin:0">Auto Showcase</h3>
+              <span class="tag">3D • WebGL</span>
+            </div>
+            <p style="color:var(--muted)">Interactive car gallery with motion and depth—built for TechMeetsTravel channel features.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="grid cols-2">
+        <div class="card tilt" data-tilt>
+          <p>Hi, I’m <strong>HARI (Hariprasath)</strong>,— a B.Tech IT student and creative developer passionate about designing smooth, premium interfaces and building practical full-stack prototypes that solve real problems.</p>
+
+           <p>I enjoy working with frontend, databases, and AI-powered solutions, and I’ve developed projects like Agri Crops Suggestion, E-Bike Face Unlocking System, and Smart Campus solutions.</p>
+
+          <p>When I’m not coding, I’m documenting tools and builds on my channels and exploring new UI motion patterns.</p>
+        </div>
+        <div class="timeline">
+          <div class="item">
+            <div class="dot"></div>
+            <div class="card">
+              <strong>Frontend Intern — Techvolt Software</strong>
+              <div style="color:var(--muted)">Built UI components, optimized performance, and collaborated on responsive design systems.</div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="dot"></div>
+            <div class="card">
+              <strong>Gen‑AI Intern — Gateway Software Solutions</strong>
+              <div style="color:var(--muted)">Prototyped workflows, prompt engineering, and AI‑powered app features.</div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="dot"></div>
+            <div class="card">
+              <strong>Projects</strong>
+              <div class="chips" style="margin-top:10px">
+                <span class="chip">Agri Crop Suggestion</span>
+                <span class="chip">E‑Bike Face Unlock</span>
+                <span class="chip">Smart Campus</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <p class="section-sub">A stack tuned for premium front‑ends and fast iteration.</p>
+      <div class="chips">
+        <span class="chip">HTML</span>
+        <span class="chip">CSS</span>
+        <span class="chip">JavaScript</span>
+        <span class="chip">React</span>
+        <span class="chip">Firebase</span>
+        <span class="chip">Figma</span>
+        <span class="chip">Flutter</span>
+        <span class="chip">Python</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Let’s Talk</h2>
+      <p class="section-sub">Have a project in mind? I’d love to hear about it.</p>
+      <div class="grid cols-2">
+        <form class="card">
+          <input placeholder="Your name" required />
+          <input type="email" placeholder="Your email" required />
+          <textarea rows="5" placeholder="Tell me about your project"></textarea>
+          <button class="btn primary" type="submit">Send Message</button>
+        </form>
+        <div class="card">
+          <h3>Contact</h3>
+          <p class="section-sub">I’m available for internships, freelance, and collaborations.</p>
+          <p>Email: <a href="mhariprasath28@gmail.com">mhariprasath28@gmail.com</a><br>GitHub: <a href="https://github.com/CodeWithHP" target="_blank">CodeWithHP</a><br>LinkedIn: <a href="https://www.linkedin.com/in/m-hariprasath-muthusamy" target="_blank">/in/m-hariprasath-muthusamy</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div>© <span id="year"></span> HP — Crafted with care.</div>
+      <div style="display:flex;gap:10px">
+        <a class="btn" href="#">Resume</a>
+        <a class="btn" href="#work">Top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // dynamic year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Vanilla tilt/parallax for elements with [data-tilt]
+    const tiltElements = Array.from(document.querySelectorAll('[data-tilt]'));
+    const clamp = (n, min, max) => Math.max(min, Math.min(n, max));
+
+    window.addEventListener('mousemove', (e) => {
+      const { innerWidth: w, innerHeight: h } = window;
+      const rx = ((e.clientY / h) - 0.5) * -10; // rotateX
+      const ry = ((e.clientX / w) - 0.5) * 10;  // rotateY
+      tiltElements.forEach(el => {
+        const depth = el.getBoundingClientRect().width * 0.02;
+        el.style.transform = `rotateX(${clamp(rx, -8, 8)}deg) rotateY(${clamp(ry, -8, 8)}deg) translateZ(0)`;
+      });
+    });
+
+    // Reset tilt on leave viewport (mobile safety)
+    window.addEventListener('mouseleave', () => {
+      tiltElements.forEach(el => el.style.transform = 'rotateX(0deg) rotateY(0deg)');
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        if(id.length>1){ e.preventDefault(); document.querySelector(id).scrollIntoView({behavior:'smooth', block:'start'}); }
+      })
+    })
+  </script>
+</body>
+</html>
